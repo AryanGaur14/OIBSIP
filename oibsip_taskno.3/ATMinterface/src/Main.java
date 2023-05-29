@@ -9,6 +9,7 @@ Step 3: And enter create account in code choices and create your account and use
 import java.sql.*;
 import java.util.Scanner;
 
+
  public class Main {
      public static void createSchema(){
          try {
@@ -20,10 +21,6 @@ import java.util.Scanner;
          catch(SQLException e){}
 
      }
-//     public static void clearScreen(){
-//         System.out.print("\033[H\033[2J");
-//         System.out.flush();
-//     }
      public static boolean login(){
          try {
              Scanner sc=new Scanner(System.in);
@@ -104,8 +101,8 @@ import java.util.Scanner;
                      break;
                  case 2:
                      if (login()) {
-                         TransactionsHistory tsh = new TransactionsHistory();
-                         tsh.transactionHistory();
+                         TransactionsHistory trh=new TransactionsHistory();
+                         trh.transactionHistory();
                          flag=false;
                      }
                      break;
@@ -141,188 +138,8 @@ import java.util.Scanner;
          }
      }
  }
-class TransactionsHistory{
-       public static void transactionHistory(){
-           try {
-               Scanner sc=new Scanner(System.in);
-               Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
-               PreparedStatement ps=con.prepareStatement("select * from transactions where userID=?");
-               System.out.println("Enter Your Account Number/UserID Again: ");
-               int userID=sc.nextInt();
-               ps.setInt(1,userID);
-               ResultSet rs=ps.executeQuery();
-               System.out.println("UserID   Debit   Credit   Balance");
-               while(rs.next()){
-                   System.out.printf("%6d ",rs.getInt("userID"));
-                   System.out.printf("%8d",rs.getInt("debited"));
-                   System.out.printf("%8d ",rs.getInt("credited"));
-                   System.out.printf("%8d",rs.getInt("balance"));
-                   System.out.println();
-               }
-           }
-           catch(SQLException e){}
-           }
-    }
-
-class Withdraw{
-    public static void withdraw(){
-        try {
-            Scanner sc=new Scanner(System.in);
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
-            Statement stm=con.createStatement();
-
-            System.out.println("Enter the Account Number/UserID Again:");
-            int userID=sc.nextInt();
-            System.out.print("Enter the amount: ");
-            int amount=sc.nextInt();
-
-            PreparedStatement ps=con.prepareStatement("select * from userdetails where userID = ?;");
-
-            int balance=0;
-            ps.setInt(1,userID);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()) {
-                balance=rs.getInt("balance");
-            }
-            if(balance>=amount) {
-                balance = balance - amount;
-            }
-            else {
-                System.out.println("Insufficient Balance");
-            }
-            PreparedStatement trans=con.prepareStatement("insert into transactions values(?,?,NULL,?);");
-            trans.setInt(1,userID);
-            trans.setInt(2,amount);
-            trans.setInt(3,balance);
-            trans.executeUpdate();
-
-            PreparedStatement userD= con.prepareStatement("Update userdetails set balance = ? where userID= ?");
-            userD.setInt(1,balance);
-            userD.setInt(2,userID);
-            userD.executeUpdate();
-
-            con.close();
-
-        }
-        catch(SQLException e){}
-    }
-}
-class Deposit{
-    public static void deposit(){
-        try {
-            Scanner sc=new Scanner(System.in);
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
-            Statement stm=con.createStatement();
-
-            System.out.println("Enter the Account Number/UserID Again:");
-            int userID=sc.nextInt();
-            System.out.print("Enter the amount: ");
-            int amount=sc.nextInt();
-
-            PreparedStatement ps=con.prepareStatement("select * from userdetails where userID = ?;");
-
-            int balance=0;
-            ps.setInt(1,userID);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()) {
-                balance=rs.getInt("balance");
-            }
-
-            balance = balance + amount;
-
-            PreparedStatement trans=con.prepareStatement("insert into transactions values(?,NULL,?,?);");
-            trans.setInt(1,userID);
-            trans.setInt(2,amount);
-            trans.setInt(3,balance);
-            trans.executeUpdate();
-
-            PreparedStatement userD= con.prepareStatement("Update userdetails set balance = ? where userID= ?");
-            userD.setInt(1,balance);
-            userD.setInt(2,userID);
-            userD.executeUpdate();
-
-            con.close();
-
-        }
-        catch(SQLException e){}
-    }
-
-}
-class Transfer{
-    public static void transfer(){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter Your Account Number/UserID Again:");
-        int yourUserID=sc.nextInt();
-        System.out.println("Enter Beneficiary Account Number/UserID:");
-        int beneUserID=sc.nextInt();
-        System.out.print("Enter the amount: ");
-        int amount=sc.nextInt();
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
-
-            PreparedStatement ps=con.prepareStatement("select * from userdetails where userID = ?;");
-
-            int balance=0;
-            ps.setInt(1,yourUserID);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()) {
-                balance=rs.getInt("balance");
-            }
-            if(balance>=amount) {
-                balance = balance - amount;
-            }
-            else {
-                System.out.println("Insufficient Balance");
-            }
-            PreparedStatement trans=con.prepareStatement("insert into transactions values(?,?,NULL,?);");
-            trans.setInt(1,yourUserID);
-            trans.setInt(2,amount);
-            trans.setInt(3,balance);
-            trans.executeUpdate();
-
-            PreparedStatement userD= con.prepareStatement("Update userdetails set balance = ? where userID= ?");
-            userD.setInt(1,balance);
-            userD.setInt(2,yourUserID);
-            userD.executeUpdate();
-
-            con.close();
-
-        }
-        catch(SQLException e){}
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
 
 
-            PreparedStatement ps=con.prepareStatement("select * from userdetails where userID = ?;");
 
-            int balance=0;
-            ps.setInt(1,beneUserID);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()) {
-                balance=rs.getInt("balance");
-            }
-            balance = balance + amount;
 
-            PreparedStatement trans=con.prepareStatement("insert into transactions values(?,NULL,?,?);");
-            trans.setInt(1,beneUserID);
-            trans.setInt(2,amount);
-            trans.setInt(3,balance);
-            trans.executeUpdate();
-
-            PreparedStatement userD= con.prepareStatement("Update userdetails set balance = ? where userID= ?");
-            userD.setInt(1,balance);
-            userD.setInt(2,beneUserID);
-            userD.executeUpdate();
-
-            con.close();
-
-        }
-        catch(SQLException e){}
-    }
-}
-class Exit{
-    public static void exit(){
-        System.exit(0);
-    }
-}
 
