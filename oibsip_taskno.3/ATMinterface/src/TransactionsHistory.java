@@ -6,7 +6,7 @@ public class TransactionsHistory {
         public void transactionHistory(){
             try {
                 Scanner sc=new Scanner(System.in);
-                Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
+                Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12622461", "sql12622461", "8dzE8c3Gci");
                 PreparedStatement ps=con.prepareStatement("select * from transactions where userID=?");
                 System.out.println("Enter Your Account Number/UserID Again: ");
                 int userID=sc.nextInt();

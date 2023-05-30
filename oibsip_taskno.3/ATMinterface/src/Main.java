@@ -13,7 +13,7 @@ import java.util.Scanner;
  public class Main {
      public static void createSchema(){
          try {
-             Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803", "sql12619803", "miiR6r7XkE");
+             Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12622461", "sql12622461", "8dzE8c3Gci");
              Statement stm = con.createStatement();
              stm.executeUpdate("create table userdetails(userID int NOT NULL,pin int NOT NULL,balance int NOT NULL,PRIMARY KEY(userID));");
              stm.executeUpdate("create table transaction(userID int,debited int,credited int,balance int);");

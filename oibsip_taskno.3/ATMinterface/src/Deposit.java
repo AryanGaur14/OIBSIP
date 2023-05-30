@@ -5,7 +5,7 @@ public class Deposit {
     public static void deposit(){
         try {
             Scanner sc=new Scanner(System.in);
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
+            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12622461", "sql12622461", "8dzE8c3Gci");
             Statement stm=con.createStatement();
 
             System.out.println("Enter the Account Number/UserID Again:");

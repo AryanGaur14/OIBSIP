@@ -11,7 +11,7 @@ public class Transfer {
         System.out.print("Enter the amount: ");
         int amount=sc.nextInt();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12619803","sql12619803","miiR6r7XkE");
+            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12622461", "sql12622461", "8dzE8c3Gci");
 
             PreparedStatement ps=con.prepareStatement("select * from userdetails where userID = ?;");
 
